@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "github-wechat-bot",
+  "version": "1.0.0",
+  "description": "本项目提供了基于 Cloudflare Workers 部署 API，支持基于 GitHub Webhook 将操作消息推送给企业微信机器人。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "huhuhang <huhuhang@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
+}
