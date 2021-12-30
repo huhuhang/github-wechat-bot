@@ -56,8 +56,13 @@ const actionWords = {
  * @returns 
  */
 async function handlePing(botKey, reqBody) {
-  const { repository } = reqBody;
-  const mdMsg = "成功收到了来自 Github 的 Ping 请求，仓库地址: " + repository.html_url;
+  const { hook, repository, organization } = reqBody;
+  // 判定是组织还是仓库配置 Webhook
+  if (hook.type == "Organization") {
+    var mdMsg = "成功收到了来自 Github 的 Ping 请求，组织: " + organization.login;
+  } else {
+    var mdMsg = "成功收到了来自 Github 的 Ping 请求，仓库地址: " + repository.html_url;
+  }
   return await sendMdMsg(botKey, mdMsg);
 }
 
