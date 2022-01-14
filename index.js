@@ -78,15 +78,16 @@ async function handlePR(botKey, reqBody) {
     if (action == "opened" || action == "reopened") {
       const mdMsg = `${sender.login} 在 [${repository.full_name}](${repository.html_url}) <font color="info">${actionWords[action]}</font>了一个 PR:
       > 分支: ${pull_request.head.ref} → ${pull_request.base.ref}
-      > 名称: [${pull_request.title}](${pull_request.html_url})
+      > 名称: [${pull_request.title}](${pull_request.html_url}) #${pull_request.number}
       > 修改: ${pull_request.changed_files} 个文件 (<font color="info">+ ${pull_request.additions}</font> <font color="warning">- ${pull_request.deletions}</font> 行修改)`;
       return await sendMdMsg(botKey, mdMsg);
     }
     else if (action == "closed" && pull_request.merged) {
       const mdMsg = `${sender.login} 在 [${repository.full_name}](${repository.html_url}) <font color="warning">合并</font>了一个 PR:
       > 分支: ${pull_request.head.ref} → ${pull_request.base.ref}
-      > 名称: [${pull_request.title}](${pull_request.html_url}) (${pull_request.user.login} 发起)
+      > 名称: [${pull_request.title}](${pull_request.html_url}) #${pull_request.number}
       > 修改: ${pull_request.changed_files} 个文件 (<font color="info">+ ${pull_request.additions}</font> <font color="warning">- ${pull_request.deletions}</font> 行修改)
+      > 发起: ${pull_request.user.login} (${pull_request.created_at})
       > 审核: ${pull_request.merged_by.login} (${pull_request.review_comments} 条意见)`;
       return await sendMdMsg(botKey, mdMsg);
     }
