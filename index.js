@@ -92,10 +92,10 @@ async function handlePR(botKey, reqBody) {
       return await sendMdMsg(botKey, mdMsg);
     }
     else {
-      return `发起、关闭、重新发起的事件才会被处理`;
+      return `${action} 操作暂时不会被处理`;
     }
   } else {
-    return `机器人操作不会被处理`;
+    return `${sender.type} 操作暂时不会被处理`;
   }
 }
 
@@ -113,7 +113,7 @@ async function handleIssue(botKey, reqBody) {
     return await sendMdMsg(botKey, mdMsg);
   }
   else {
-    return `发起、关闭、重新发起的事件才会被处理`;
+    return `${action} 操作暂时不会被处理`;
   }
 }
 
