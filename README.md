@@ -8,6 +8,14 @@
 - Pull Requests 相关操作提醒。
 - 欢迎贡献支持更多操作提醒。
 
+## 快速使用
+
+你可以使用本项目配置好的服务：
+
+- Webhook URL: `https://github-wechat-bot.huhuhang.workers.dev?key=<你的机器人密钥>`
+
+为了更好的可用性，推荐按照下方步骤自行部署。
+
 ## 如何部署
 
 你可以直接在 Cloudflare Workers 网页版中新建项目，并复制本仓库中的 `index.js` 到在线编辑器中部署。
