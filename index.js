@@ -126,7 +126,7 @@ async function handleIssue(botKey, reqBody) {
 async function handleAction(botKey, reqBody) {
   const { action, sender, check_run, repository } = reqBody;
   // 如果状态完成且执行失败，则发送错误信息
-  if (action == "completed" &&  == "failure") {
+  if (action == "completed" && check_run.conclusion == "failure") {
     const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) 中触发的 GitHub Action 执行<font color="warning">失败</font>了:
     > 查看状态: [${check_run.name}](${check_run.html_url})
     > 错误信息: ${check_run.output.summary}`;
