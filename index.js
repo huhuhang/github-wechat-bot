@@ -167,6 +167,7 @@ async function handleRequest(request) {
     // 如果是 Action 事件
     case "check_run":
       var results = await handleAction(botKey, JSON.parse(reqBody))
+      break;
     // 其他事件暂不支持
     default:
       var results = `暂不支持处理 ${gitEvent} 事件`
