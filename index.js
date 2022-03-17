@@ -106,10 +106,30 @@ async function handlePR(botKey, reqBody) {
  * @returns 
  */
 async function handleIssue(botKey, reqBody) {
-  const { action, issue, repository } = reqBody;
+  const { action, sender, issue, repository } = reqBody;
   if (action == "opened" || action == "closed" || action == "reopened") {
     const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) <font color="info">${actionWords[action]}了一个 Issues</font>:
     > 名称: [${issue.title}](${issue.html_url})`;
+    return await sendMdMsg(botKey, mdMsg);
+  }
+  else {
+    return `${action} 操作暂时不会被处理`;
+  }
+}
+
+/**
+ * 处理 Action 错误请求
+ * @param {String} botKey 企业微信机器人密钥
+ * @param {JSON} reqBody GitHub 传递的请求体
+ * @returns 
+ */
+async function handleAction(botKey, reqBody) {
+  const { action, sender, check_run, repository } = reqBody;
+  // 如果状态完成且执行失败，则发送错误信息
+  if (action == "completed" && check_run.conclusion == "failure") {
+    const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) 中触发的 GitHub Action 执行<font color="warning">失败</font>了:
+    > 查看状态: [${check_run.name}](${check_run.html_url})
+    > 错误信息: ${check_run.output.summary}`;
     return await sendMdMsg(botKey, mdMsg);
   }
   else {
@@ -144,6 +164,9 @@ async function handleRequest(request) {
     case "issues":
       var results = await handleIssue(botKey, JSON.parse(reqBody))
       break;
+    // 如果是 Action 事件
+    case "check_run":
+      var results = await handleAction(botKey, JSON.parse(reqBody))
     // 其他事件暂不支持
     default:
       var results = `暂不支持处理 ${gitEvent} 事件`
