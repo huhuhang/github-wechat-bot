@@ -4,9 +4,9 @@
 
 目前支持：
 
-- Issues 相关操作提醒。
-- Pull Requests 相关操作提醒。
-- 欢迎贡献支持更多操作提醒。
+- Issues 创建提醒。
+- Pull Requests 创建、合并提醒。
+- Action 运行失败提醒。
 
 ## 快速使用
 
