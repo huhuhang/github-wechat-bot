@@ -108,7 +108,7 @@ async function handlePR(botKey, reqBody) {
 async function handleIssue(botKey, reqBody) {
   const { action, sender, issue, repository } = reqBody;
   if (action == "opened" || action == "closed" || action == "reopened") {
-    const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) <font color="info">${actionWords[action]}了一个 Issues</font>:
+    const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) <font color="info">${actionWords[action]}</font>了一个 Issues:
     > 名称: [${issue.title}](${issue.html_url})`;
     return await sendMdMsg(botKey, mdMsg);
   }
