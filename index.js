@@ -38,15 +38,15 @@ async function sendMdMsg(botKey, content) {
 
 // 标记事件动作
 const actionWords = {
-  "opened": "创建",
-  "closed": "关闭",
-  "reopened": "重新发起",
-  "edited": "更新",
-  "merge": "合并",
-  "created": "创建",
-  "requested": "请求",
-  "completed": "完成",
-  "synchronize": "同步更新"
+  "opened": "<font color='info'>创建</font>",
+  "closed": "<font color='warning'>关闭</font>",
+  "reopened": "<font color='info'>重新发起</font>",
+  "edited": "<font color='info'>更新</font>",
+  "merge": "<font color='warning'>合并</font>",
+  "created": "<font color='info'>创建</font>",
+  "requested": "<font color='info'>请求</font>",
+  "completed": "<font color='warning'>完成</font>",
+  "synchronize": "<font color='info'>同步更新</font>"
 };
 
 /**
@@ -76,14 +76,14 @@ async function handlePR(botKey, reqBody) {
   const { action, sender, pull_request, repository } = reqBody;
   if (sender.type !== "Bot") {
     if (action == "opened" || action == "reopened") {
-      const mdMsg = `${sender.login} 在 [${repository.full_name}](${repository.html_url}) <font color="info">${actionWords[action]}</font>了一个 PR:
+      const mdMsg = `${sender.login} 在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了一个 PR:
       > 分支: ${pull_request.head.ref} → ${pull_request.base.ref}
       > 名称: [${pull_request.title}](${pull_request.html_url}) #${pull_request.number}
       > 修改: ${pull_request.changed_files} 个文件 (<font color="info">+ ${pull_request.additions}</font> <font color="warning">- ${pull_request.deletions}</font> 行修改)`;
       return await sendMdMsg(botKey, mdMsg);
     }
     else if (action == "closed" && pull_request.merged) {
-      const mdMsg = `${sender.login} 在 [${repository.full_name}](${repository.html_url}) <font color="warning">合并</font>了一个 PR:
+      const mdMsg = `${sender.login} 在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了一个 PR:
       > 分支: ${pull_request.head.ref} → ${pull_request.base.ref}
       > 名称: [${pull_request.title}](${pull_request.html_url}) #${pull_request.number}
       > 修改: ${pull_request.changed_files} 个文件 (<font color="info">+ ${pull_request.additions}</font> <font color="warning">- ${pull_request.deletions}</font> 行修改)
@@ -108,7 +108,7 @@ async function handlePR(botKey, reqBody) {
 async function handleIssue(botKey, reqBody) {
   const { action, sender, issue, repository } = reqBody;
   if (action == "opened" || action == "closed" || action == "reopened") {
-    const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) <font color="info">${actionWords[action]}</font>了一个 Issues:
+    const mdMsg = `${sender.login}  在 [${repository.full_name}](${repository.html_url}) ${actionWords[action]}了一个 Issues:
     > 名称: [${issue.title}](${issue.html_url})`;
     return await sendMdMsg(botKey, mdMsg);
   }
